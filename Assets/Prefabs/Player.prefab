@@ -555,12 +555,6 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 1335
-  weapon:
-    name: SMG
-    damage: 40
-    range: 100
-  weaponGFX: {fileID: 0}
-  weaponLayerName: Weapon
 --- !u!114 &1177185867882215441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,6 +585,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd29735c997346c499a291c343d24946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  weaponHolder: {fileID: 6016299205520684847}
+  weaponLayerName: Weapon
+  primaryWeapon:
+    name: Blaster
+    damage: 5
+    range: 100
+    fireRate: 10
+    graphics: {fileID: 4355647378189887255, guid: d29f11d3a71c0a845a36c62eab564ff8,
+      type: 3}
 --- !u!1 &1347020314536032733
 GameObject:
   m_ObjectHideFlags: 0
