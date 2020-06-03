@@ -11,7 +11,7 @@ public class PlayerShoot : NetworkBehaviour
     private Camera camera;
     [SerializeField]
     private LayerMask mask;
-   
+
     private PlayerWeapon currentWeapon;
     private WeaponManager weaponManager;
 
@@ -40,33 +40,69 @@ public class PlayerShoot : NetworkBehaviour
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                InvokeRepeating("Shoot",0f,1f/currentWeapon.fireRate);
+                InvokeRepeating("Shoot", 0f, 1f / currentWeapon.fireRate);
             }
-            else if(Input.GetButtonUp("Fire1"))
+            else if (Input.GetButtonUp("Fire1"))
             {
                 CancelInvoke("Shoot");
             }
         }
-       
+
     }
     //client - called only on client
     [Client]
     void Shoot()
     {
-        Debug.Log("Shoot!");
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        //only local player
 
+
+        //we are shooting, call the onshoot method on server
+        CmdOnShoot();
         RaycastHit _hit;
         if (Physics.Raycast(camera.transform.position, camera.transform.forward, out _hit, currentWeapon.range, mask))
         {
             //we hit something
-            Debug.Log("We hit" + _hit.collider.name);
+            //Debug.Log("We hit" + _hit.collider.name);
             if (_hit.collider.tag == PLAYER_TAG)
             {
                 CmdPlayerShot(_hit.collider.name, currentWeapon.damage);
             }
+            //we hit something, call the OnHit method on the server
+            CmdOnHit(_hit.point, _hit.normal);
         }
     }
+    //called on a server when a player shoots
+    [Command]
+    void CmdOnShoot()
+    {
+        RpcDoShootEffect();
+    }
+    //is called on the server when we hit something
+    //takes in the hit point and normal of the surface we hit
+    [Command]
+    void CmdOnHit(Vector3 _pos, Vector3 _normal)
+    {
+        RpcDoDoHitEffect(_pos, _normal);
+    }
+    //is called on all clients, here we can spawn effects
+    [ClientRpc]
+    void RpcDoDoHitEffect(Vector3 _pos, Vector3 _normal)
+    {
+        //may be resource hungry, object-pooling might be solution
+       GameObject _hiteffect =  (GameObject)Instantiate(weaponManager.GetCurrentGraphics().hitEffectPrefab, _pos, Quaternion.LookRotation(_normal));
 
+        Destroy(_hiteffect, 2f);
+    }
+    //called on all clients when we need to do a shoot effect
+    [ClientRpc]
+    void RpcDoShootEffect()
+    {
+        weaponManager.GetCurrentGraphics().muzzleFlash.Play();
+    }
     //command - called only on server
     [Command]
     void CmdPlayerShot(string _playerID, int _damage)

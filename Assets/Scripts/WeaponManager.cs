@@ -12,27 +12,37 @@ public class WeaponManager : NetworkBehaviour
     private PlayerWeapon primaryWeapon;
 
     private PlayerWeapon currentWeapon;
-
+    private WeaponGraphics currentGraphics;
     void Start()
     {
         EquipWeapon(primaryWeapon);
-
-       // weaponGFX.layer = LayerMask.NameToLayer(weaponLayerName);
-
     }
     public PlayerWeapon GetCurrentWeapon()
     {
         return currentWeapon;
     }
-
+    public WeaponGraphics GetCurrentGraphics()
+    {
+        Debug.Log("GetCurrentGraphics:" + currentGraphics.name);
+        return currentGraphics;
+    }
     void EquipWeapon(PlayerWeapon _weapon)
     {
         currentWeapon = _weapon;
         GameObject _weaponIns =  (GameObject)Instantiate(_weapon.graphics, weaponHolder.position, weaponHolder.rotation);
+
+
+        currentGraphics = _weaponIns.GetComponent<WeaponGraphics>();
+        Debug.Log("currentGraphics:" + currentGraphics.name);
+        if (currentGraphics == null)
+        {
+            Debug.LogError("No WeaponGraphics component on the weapon object: "+ _weaponIns.name);
+        }
+
         //set parent so it follows movement
         _weaponIns.transform.SetParent(weaponHolder);
         if (isLocalPlayer)
-            _weaponIns.layer = LayerMask.NameToLayer(weaponLayerName);
+            Util.SetLayerRecursively(_weaponIns, LayerMask.NameToLayer(weaponLayerName));
 
     } 
 }

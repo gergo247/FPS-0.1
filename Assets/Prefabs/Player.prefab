@@ -398,7 +398,6 @@ MonoBehaviour:
   - {fileID: 1347020314257041847}
   - {fileID: 1347020313374769122}
   - {fileID: 1347020313374769123}
-  - {fileID: 1766299972474109142}
   - {fileID: 5004608135243364852}
   remoteLayerName: RemotePlayer
   dontDrawLAyerName: DontDraw
