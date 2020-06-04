@@ -29,6 +29,9 @@ public class Player : NetworkBehaviour
     [SerializeField]
     private GameObject spawnEffect;
 
+    private bool firstSetup = true;
+
+
     #region rpc methods
 
     [ClientRpc]
@@ -47,16 +50,38 @@ public class Player : NetworkBehaviour
     #endregion rpc methods
 
     #region public methods
-   
-    public void Setup()
+
+    public void SetupPlayer()
     {
-        wasEnabled = new bool[disableOnDeath.Length];
-        for (int i = 0; i < wasEnabled.Length; i++)
+        if (isLocalPlayer)
         {
-            wasEnabled[i] = disableOnDeath[i].enabled;
+            //switch cameras
+            GameManager.instance.SetSceneCameraActive(false);
+            GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
+        }
+        CmdBroadCastNewPlayerSetup();
+    }
+    [Command]
+    private void CmdBroadCastNewPlayerSetup()
+    {
+        RpcSetupPlayerOnAllClients();
+    }
+
+    [ClientRpc]
+    private void RpcSetupPlayerOnAllClients()
+    {
+        if (firstSetup)
+        {
+            wasEnabled = new bool[disableOnDeath.Length];
+            for (int i = 0; i < wasEnabled.Length; i++)
+            {
+                wasEnabled[i] = disableOnDeath[i].enabled;
+            }
+            firstSetup = false;
         }
         SetDefaults();
     }
+
     public void SetDefaults()
     {
         isDead = false;
@@ -78,28 +103,23 @@ public class Player : NetworkBehaviour
         {
             _col.enabled = true;
         }
-        //switch cameras
-        if (isLocalPlayer)
-        {
-            GameManager.instance.SetSceneCameraActive(false);
-            GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
-        }
+
         //create spawn effect
         GameObject _gfxIns = (GameObject)Instantiate(spawnEffect, transform.position, Quaternion.identity);
         Destroy(_gfxIns, 3f);
 
     }
     #endregion public methods
-    void Update()
-    {
-        if (!isLocalPlayer)
-            return;
+    //void Update()
+    //{
+    //    if (!isLocalPlayer)
+    //        return;
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            RpcTakeDamage(9999);
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.K))
+    //    {
+    //        RpcTakeDamage(9999);
+    //    }
+    //}
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime);
@@ -107,7 +127,11 @@ public class Player : NetworkBehaviour
         Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
         transform.position = _spawnPoint.position;
         transform.rotation = _spawnPoint.rotation;
-        SetDefaults();
+
+        //wait for position in clients before spawn avoid moving player before initing particles
+        yield return new WaitForSeconds(0.1f);
+
+        SetupPlayer();
         Debug.Log(transform.name + " respawned.");
     }
 
@@ -133,7 +157,7 @@ public class Player : NetworkBehaviour
             _col.enabled = false;
         }
         //spawn death effect Quaternion.identity - 0 0 0 rotation
-        GameObject _gfxIns = (GameObject)Instantiate(deathEffect,transform.position,Quaternion.identity);
+        GameObject _gfxIns = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
         Destroy(_gfxIns, 3f);
         //switch cameras
         if (isLocalPlayer)
