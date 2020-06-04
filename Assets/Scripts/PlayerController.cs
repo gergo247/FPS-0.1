@@ -10,12 +10,25 @@ public class PlayerController : MonoBehaviour
     private float lookSensitivity = 5f;
     [SerializeField]
     private float thrusterForce = 1000f;
+    [SerializeField]
+    private float thrusterFuelBurnSpeed = 1f;
+    [SerializeField]
+    private float thrusterFuelRegenSpeed = 0.3f;
+    private float thrusterFuelAmount = 1f;
+
+    public float GetThrusterAmount()
+    {
+        return thrusterFuelAmount;
+    }
+    [SerializeField]
+    private LayerMask envitonmentMask;
 
     [Header("Spring settings")]
     [SerializeField]
     private float jointSpring = 20f;
     [SerializeField]
     private float jointMaxForce = 40f;
+
 
 
     private PlayerMotor motor;
@@ -31,6 +44,19 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //setting target position for spring, this makes the physics act right when it comes to
+        //applying gravity when flying over objects
+        RaycastHit _hit;
+        if (Physics.Raycast(transform.position, Vector3.down,out _hit,100f, envitonmentMask))
+        {
+            joint.targetPosition = new Vector3(0f, -_hit.point.y, 0f);
+        }
+        else
+        {
+            joint.targetPosition = new Vector3(0f, 0f, 0f);
+
+        }
+
         //Calculate movement velocity as a 3D vector
         float _xMov = Input.GetAxisRaw("Horizontal");
         float _zMov = Input.GetAxisRaw("Vertical");
@@ -54,18 +80,24 @@ public class PlayerController : MonoBehaviour
 
         //Apply rotation
         motor.RotateCamera(_cameraRotationX);
-
+        //calculate the thrusterforce based on player input
         Vector3 _thrusterForce = Vector3.zero;
-        if (Input.GetButton("Jump"))
+        if (Input.GetButton("Jump") && thrusterFuelAmount > 0f)
         {
-            _thrusterForce = Vector3.up * thrusterForce;
+            thrusterFuelAmount -= thrusterFuelBurnSpeed * Time.deltaTime;
+            if (thrusterFuelAmount >= 0.01f)
+                _thrusterForce = Vector3.up * thrusterForce;
             //kikapcs visszaugrás/húzás
             SetJointSettings(0f);
         }
         else
         {
+            thrusterFuelAmount += thrusterFuelRegenSpeed * Time.deltaTime;
             SetJointSettings(jointSpring);
         }
+
+        thrusterFuelAmount = Mathf.Clamp(thrusterFuelAmount, 0f, 1f);
+
         //apply thruster force
         motor.ApplyThruster(_thrusterForce);
 

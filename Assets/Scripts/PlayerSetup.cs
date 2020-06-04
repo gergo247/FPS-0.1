@@ -2,6 +2,7 @@
 using Mirror;
 
 [RequireComponent(typeof(Player))]
+[RequireComponent(typeof(PlayerController))]
 public class PlayerSetup : NetworkBehaviour
 {
     [SerializeField]
@@ -15,8 +16,8 @@ public class PlayerSetup : NetworkBehaviour
     [SerializeField]
     GameObject playerUIPrefab;
 
-    private GameObject playerUIInstance;
-    Camera sceneCamera;
+    [HideInInspector]
+    public GameObject playerUIInstance;
     void Start()
     {
         //if we dont control the player disable components
@@ -27,12 +28,6 @@ public class PlayerSetup : NetworkBehaviour
         }
         else
         {
-            //we are local player : disable scene camera
-            sceneCamera = Camera.main;
-            if (sceneCamera != null)
-            {
-                sceneCamera.gameObject.SetActive(false);
-            }
             //disable player graphics for local player
             SetLayerRecursively(playerGraphics, LayerMask.NameToLayer(dontDrawLAyerName));
 
@@ -40,7 +35,11 @@ public class PlayerSetup : NetworkBehaviour
             playerUIInstance = Instantiate(playerUIPrefab);
             //no clone
             playerUIInstance.name = playerUIPrefab.name;
-
+            //configure player ui
+            PlayerUI ui = playerUIInstance.GetComponent<PlayerUI>();
+            if (ui == null)
+                Debug.LogError("No playerUI component on PlayerUI prefab.");
+            ui.SetController(GetComponent<PlayerController>());
         }
         //player required component
         GetComponent<Player>().Setup();
@@ -78,11 +77,7 @@ public class PlayerSetup : NetworkBehaviour
     {
         Destroy(playerUIInstance);
 
-        if (sceneCamera != null)
-        {
-            sceneCamera.gameObject.SetActive(true);
-        }
-
+        GameManager.instance.SetSceneCameraActive(true);
         GameManager.UnRegisterPlayer(transform.name);
     }
 

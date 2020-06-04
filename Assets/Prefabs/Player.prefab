@@ -238,7 +238,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1847
+    m_Bits: 10039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -269,13 +269,13 @@ GameObject:
   - component: {fileID: 1347020314257041844}
   - component: {fileID: 1347020314257041845}
   - component: {fileID: 1347020314257041842}
-  - component: {fileID: 1347020314257041846}
-  - component: {fileID: 1347020314257041847}
   - component: {fileID: 2699642026423285365}
-  - component: {fileID: -7253441733075860580}
+  - component: {fileID: -2739764032226560155}
   - component: {fileID: 434171271949024665}
   - component: {fileID: 3531787939906636877}
-  - component: {fileID: -2739764032226560155}
+  - component: {fileID: 1347020314257041847}
+  - component: {fileID: 1347020314257041846}
+  - component: {fileID: -7253441733075860580}
   - component: {fileID: 1766299972474109142}
   - component: {fileID: 1177185867882215441}
   - component: {fileID: 6355262935315378636}
@@ -332,37 +332,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1347020314257041846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347020314257041843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec12c71c85fead2449e472a3a1878c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 1347020313374769122}
-  cameraRotaitonLimit: 85
---- !u!114 &1347020314257041847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347020314257041843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ba5834494e931248ba0c52cfb1208aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  lookSensitivity: 3
-  thrusterForce: 1000
-  jointSpring: 15
-  jointMaxForce: 40
 --- !u!114 &2699642026423285365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,68 +348,6 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &-7253441733075860580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347020314257041843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c20f710aea1b7644eab2a33f0c7d5ca7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  componentsToDisable:
-  - {fileID: 1347020314257041846}
-  - {fileID: 1347020314257041847}
-  - {fileID: 1347020313374769122}
-  - {fileID: 1347020313374769123}
-  - {fileID: 5004608135243364852}
-  remoteLayerName: RemotePlayer
-  dontDrawLAyerName: DontDraw
-  playerGraphics: {fileID: 1347020315018339205}
-  playerUIPrefab: {fileID: 406289309214184730, guid: b44e28dc33935594cb069ff59619d217,
-    type: 3}
---- !u!114 &434171271949024665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347020314257041843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
---- !u!114 &3531787939906636877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347020314257041843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
-  target: {fileID: 1347020313374769120}
 --- !u!153 &-2739764032226560155
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -536,6 +443,105 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &434171271949024665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347020314257041843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+--- !u!114 &3531787939906636877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347020314257041843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  target: {fileID: 1347020313374769120}
+--- !u!114 &1347020314257041847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347020314257041843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba5834494e931248ba0c52cfb1208aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  lookSensitivity: 3
+  thrusterForce: 1000
+  thrusterFuelBurnSpeed: 1
+  thrusterFuelRegenSpeed: 0.3
+  envitonmentMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  jointSpring: 15
+  jointMaxForce: 40
+--- !u!114 &1347020314257041846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347020314257041843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec12c71c85fead2449e472a3a1878c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 1347020313374769122}
+  cameraRotaitonLimit: 85
+--- !u!114 &-7253441733075860580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347020314257041843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20f710aea1b7644eab2a33f0c7d5ca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  componentsToDisable:
+  - {fileID: 1347020314257041846}
+  - {fileID: 1347020314257041847}
+  - {fileID: 1347020313374769122}
+  - {fileID: 1347020313374769123}
+  - {fileID: 5004608135243364852}
+  remoteLayerName: RemotePlayer
+  dontDrawLAyerName: DontDraw
+  playerGraphics: {fileID: 1347020315018339205}
+  playerUIPrefab: {fileID: 406289309214184730, guid: b44e28dc33935594cb069ff59619d217,
+    type: 3}
+  playerUIInstance: {fileID: 0}
 --- !u!114 &1766299972474109142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,7 +559,7 @@ MonoBehaviour:
   camera: {fileID: 1347020313374769122}
   mask:
     serializedVersion: 2
-    m_Bits: 1335
+    m_Bits: 9527
 --- !u!114 &1177185867882215441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,6 +578,13 @@ MonoBehaviour:
   disableOnDeath:
   - {fileID: 1347020314257041847}
   - {fileID: 1766299972474109142}
+  disableGameObjectsOnDeath:
+  - {fileID: 1347020315018339205}
+  - {fileID: 1347020313374769121}
+  deathEffect: {fileID: 737942988855132268, guid: 25ebd376e0d8dfc438708f8b245d78c2,
+    type: 3}
+  spawnEffect: {fileID: 5361101528164247849, guid: dba32b3c7d7f19644bcb02a72e04ea2c,
+    type: 3}
 --- !u!114 &6355262935315378636
 MonoBehaviour:
   m_ObjectHideFlags: 0
