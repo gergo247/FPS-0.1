@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Mirror;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(WeaponManager))]
 public class PlayerShoot : NetworkBehaviour
@@ -15,6 +16,12 @@ public class PlayerShoot : NetworkBehaviour
     private PlayerWeapon currentWeapon;
     private WeaponManager weaponManager;
 
+    //audio
+    AudioSource gunAudio;
+    //shoot sound effects
+    public List<AudioClip> shootSounds = new List<AudioClip>();
+
+
     void Start()
     {
         if (camera == null)
@@ -23,11 +30,23 @@ public class PlayerShoot : NetworkBehaviour
             this.enabled = false;
         }
 
+        gunAudio = GetComponent<AudioSource>();
+        gunAudio.volume = 0.2f;
         weaponManager = GetComponent<WeaponManager>();
     }
     void Update()
     {
         currentWeapon = weaponManager.GetCurrentWeapon();
+
+        if (currentWeapon.bullets < currentWeapon.maxBullets)
+        {
+            if (Input.GetButtonDown("Reload"))
+            {
+                weaponManager.Reload();
+                return;
+            }
+        }
+
         //single frie
         if (currentWeapon.fireRate <= 0)
         {
@@ -49,7 +68,7 @@ public class PlayerShoot : NetworkBehaviour
         }
 
     }
-  
+
     //called on a server when a player shoots
     [Command]
     void CmdOnShoot()
@@ -68,7 +87,7 @@ public class PlayerShoot : NetworkBehaviour
     void RpcDoDoHitEffect(Vector3 _pos, Vector3 _normal)
     {
         //may be resource hungry, object-pooling might be solution
-       GameObject _hiteffect =  (GameObject)Instantiate(weaponManager.GetCurrentGraphics().hitEffectPrefab, _pos, Quaternion.LookRotation(_normal));
+        GameObject _hiteffect = (GameObject)Instantiate(weaponManager.GetCurrentGraphics().hitEffectPrefab, _pos, Quaternion.LookRotation(_normal));
 
         Destroy(_hiteffect, 2f);
     }
@@ -77,12 +96,19 @@ public class PlayerShoot : NetworkBehaviour
     void RpcDoShootEffect()
     {
         weaponManager.GetCurrentGraphics().muzzleFlash.Play();
+        if (gunAudio == null)
+            return;
+
+    //    int randomIndex = Random.Range(0, shootSounds.Count);
+       // gunAudio.clip = shootSounds[randomIndex];
+        if (gunAudio != null)
+        gunAudio.PlayOneShot(shootSounds[0]);
     }
     //client - called only on client
     [Client]
     void Shoot()
     {
-        if (!isLocalPlayer)
+        if (!isLocalPlayer || weaponManager.isReloading)
         {
             return;
         }
@@ -95,7 +121,7 @@ public class PlayerShoot : NetworkBehaviour
         }
 
         currentWeapon.bullets--;
-        Debug.Log("Remaining bullets :" +currentWeapon.bullets);
+        Debug.Log("Remaining bullets :" + currentWeapon.bullets);
 
         //we are shooting, call the onshoot method on server
         CmdOnShoot();
@@ -114,12 +140,12 @@ public class PlayerShoot : NetworkBehaviour
     }
     //command - called only on server
     [Command]
-    void CmdPlayerShot(string _playerID, int _damage,string _sourceID)
+    void CmdPlayerShot(string _playerID, int _damage, string _sourceID)
     {
         Debug.Log(_playerID + " has been shot");
         //slow, stb
         //Destroy(GameObject.Find(_ID));
-       Player _player = GameManager.GetPlayer(_playerID);
+        Player _player = GameManager.GetPlayer(_playerID);
         _player.RpcTakeDamage(_damage, _sourceID);
     }
 }

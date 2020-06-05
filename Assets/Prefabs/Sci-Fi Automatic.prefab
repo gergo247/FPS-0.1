@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 8606943287116787506}
   - component: {fileID: 2616178216813761483}
   - component: {fileID: 2578016402712045702}
+  - component: {fileID: 3706861466702857430}
   m_Layer: 0
   m_Name: Sci-Fi Automatic
   m_TagString: Untagged
@@ -129,6 +130,25 @@ MonoBehaviour:
   muzzleFlash: {fileID: 2317096490800008303}
   hitEffectPrefab: {fileID: 4137522770079934059, guid: 102828ffea4fa704e94857f58a0fc8dd,
     type: 3}
+--- !u!95 &3706861466702857430
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4355647378189887255}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 248917ba9d8f0084b99de6227d621713, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2317096490815607723
 PrefabInstance:
   m_ObjectHideFlags: 0

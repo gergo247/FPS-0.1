@@ -14,11 +14,19 @@ public class WeaponManager : NetworkBehaviour
 
     private PlayerWeapon currentWeapon;
     private WeaponGraphics currentGraphics;
+    [HideInInspector]
+    public bool isReloading = false;
 
-    private bool isReloading = false;
+    //audio
+    AudioSource reloadAudio;
+    //shoot sound effects
+    public AudioClip reloadSound;
+
     void Start()
     {
         EquipWeapon(primaryWeapon);
+        reloadAudio = GetComponent<AudioSource>();
+        reloadAudio.volume = 0.2f;
     }
     public PlayerWeapon GetCurrentWeapon()
     {
@@ -60,11 +68,28 @@ public class WeaponManager : NetworkBehaviour
     private IEnumerator Reload_Coroutine()
     {
         isReloading = true;
-
+        CmdOnReload();
         yield return new WaitForSeconds(currentWeapon.reloadTime);
 
         currentWeapon.bullets = currentWeapon.maxBullets;
 
         isReloading = false;
+    }
+    [Command]
+    void CmdOnReload()
+    {
+        RpcOnReload();
+    }
+    [ClientRpc]
+    void RpcOnReload()
+    {
+        Animator anim = currentGraphics.GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetTrigger("Reload");
+        }
+        if (reloadAudio != null)
+            reloadAudio.PlayOneShot(reloadSound);
+
     }
 }

@@ -40,7 +40,7 @@ public class Player : NetworkBehaviour
 
     private bool firstSetup = true;
     //audio
-    AudioSource audio;
+    AudioSource announcerAudio;
     //mutliple kill
     public AudioClip FirstBlood;
     public AudioClip DoubleKill;
@@ -134,8 +134,8 @@ public class Player : NetworkBehaviour
         GameObject _gfxIns = (GameObject)Instantiate(spawnEffect, transform.position, Quaternion.identity);
         Destroy(_gfxIns, 3f);
 
-        audio = GetComponent<AudioSource>();
-        audio.volume = 0.2f;
+        announcerAudio = GetComponent<AudioSource>();
+        announcerAudio.volume = 0.2f;
 
     }
     #endregion public methods
@@ -222,56 +222,57 @@ public class Player : NetworkBehaviour
 
     public void PlayKillSound()
     {
+        if (announcerAudio == null)
+            return;
 
-        switch (killsThisLife)
+            switch (killsThisLife)
         {
             case 1:
-                audio.clip = FirstBlood;
+                announcerAudio.clip = FirstBlood;
                 break;
             case 2:
-                audio.clip = DoubleKill;
+                announcerAudio.clip = DoubleKill;
                 break;
             case 3:
-                audio.clip = MultiKill;
+                announcerAudio.clip = MultiKill;
                 break;
             case 4:
-                audio.clip = MegaKill;
+                announcerAudio.clip = MegaKill;
                 break;
             case 5:
-                audio.clip = UltraKill;
+                announcerAudio.clip = UltraKill;
                 break;
             case 6:
-                audio.clip = MonsterKill;
+                announcerAudio.clip = MonsterKill;
                 break;
             case 7:
-                audio.clip = LudicrousKill;
+                announcerAudio.clip = LudicrousKill;
                 break;
             case 8:
-                audio.clip = HolyShit;
+                announcerAudio.clip = HolyShit;
                 break;
           //  case 5:
           //      audio.clip = KillingSpree;
           //      break;
             case 10:
-                audio.clip = Rampage;
+                announcerAudio.clip = Rampage;
                 break;
             case 15:
-                audio.clip = Dominating;
+                announcerAudio.clip = Dominating;
                 break;
             case 20:
-                audio.clip = Unstoppable;
+                announcerAudio.clip = Unstoppable;
                 break;
             case 25:
-                audio.clip = GODLIKE;
+                announcerAudio.clip = GODLIKE;
                 break;
             case 30:
-                audio.clip = WICKEDSICK;
+                announcerAudio.clip = WICKEDSICK;
                 break;
             default:
-                audio.clip = null;
+                announcerAudio.clip = null;
                 break;
         }
-
-        audio.Play();
+         announcerAudio.Play();
     }
 }
