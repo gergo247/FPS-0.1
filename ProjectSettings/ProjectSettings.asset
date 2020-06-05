@@ -657,10 +657,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: eb7e4618-1d60-49b8-bb36-5f9f93e3eac5
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: FPS 0.1
+  organizationId: gergo247
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

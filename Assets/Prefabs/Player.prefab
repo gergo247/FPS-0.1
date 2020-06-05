@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 1766299972474109142}
   - component: {fileID: 1177185867882215441}
   - component: {fileID: 6355262935315378636}
+  - component: {fileID: 4182722481660603084}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -358,8 +359,8 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
-  m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 1, z: 0}
+  m_AutoConfigureConnectedAnchor: 0
+  m_ConnectedAnchor: {x: 0, y: 1.07, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 2
@@ -574,6 +575,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  kills: 0
+  killsThisLife: 0
+  deaths: 0
   maxHealth: 100
   disableOnDeath:
   - {fileID: 1347020314257041847}
@@ -608,6 +612,18 @@ MonoBehaviour:
     fireRate: 10
     graphics: {fileID: 4355647378189887255, guid: d29f11d3a71c0a845a36c62eab564ff8,
       type: 3}
+--- !u!114 &4182722481660603084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347020314257041843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07becd4885fd5474f973cb02f1074199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1347020314536032733
 GameObject:
   m_ObjectHideFlags: 0

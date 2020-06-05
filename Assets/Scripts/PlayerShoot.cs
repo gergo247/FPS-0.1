@@ -49,32 +49,7 @@ public class PlayerShoot : NetworkBehaviour
         }
 
     }
-    //client - called only on client
-    [Client]
-    void Shoot()
-    {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-        //only local player
-
-
-        //we are shooting, call the onshoot method on server
-        CmdOnShoot();
-        RaycastHit _hit;
-        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out _hit, currentWeapon.range, mask))
-        {
-            //we hit something
-            //Debug.Log("We hit" + _hit.collider.name);
-            if (_hit.collider.tag == PLAYER_TAG)
-            {
-                CmdPlayerShot(_hit.collider.name, currentWeapon.damage);
-            }
-            //we hit something, call the OnHit method on the server
-            CmdOnHit(_hit.point, _hit.normal);
-        }
-    }
+  
     //called on a server when a player shoots
     [Command]
     void CmdOnShoot()
@@ -103,14 +78,40 @@ public class PlayerShoot : NetworkBehaviour
     {
         weaponManager.GetCurrentGraphics().muzzleFlash.Play();
     }
+    //client - called only on client
+    [Client]
+    void Shoot()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        //only local player
+
+
+        //we are shooting, call the onshoot method on server
+        CmdOnShoot();
+        RaycastHit _hit;
+        if (Physics.Raycast(camera.transform.position, camera.transform.forward, out _hit, currentWeapon.range, mask))
+        {
+            //we hit something
+            //Debug.Log("We hit" + _hit.collider.name);
+            if (_hit.collider.tag == PLAYER_TAG)
+            {
+                CmdPlayerShot(_hit.collider.name, currentWeapon.damage, transform.name);
+            }
+            //we hit something, call the OnHit method on the server
+            CmdOnHit(_hit.point, _hit.normal);
+        }
+    }
     //command - called only on server
     [Command]
-    void CmdPlayerShot(string _playerID, int _damage)
+    void CmdPlayerShot(string _playerID, int _damage,string _sourceID)
     {
         Debug.Log(_playerID + " has been shot");
         //slow, stb
         //Destroy(GameObject.Find(_ID));
        Player _player = GameManager.GetPlayer(_playerID);
-        _player.RpcTakeDamage(_damage);
+        _player.RpcTakeDamage(_damage, _sourceID);
     }
 }

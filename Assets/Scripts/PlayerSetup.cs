@@ -43,9 +43,24 @@ public class PlayerSetup : NetworkBehaviour
 
             //player required component
             GetComponent<Player>().SetupPlayer();
+            string _username = "Test";
+            _username = transform.name;
+
+            CmdSetUsername(transform.name, _username);
         }
         
     }
+    [Command]
+    void CmdSetUsername(string playerID, string username)
+    {
+       Player player = GameManager.GetPlayer(playerID);
+        if (player != null)
+        {
+            Debug.Log(username + " has joined");
+            player.username = username;
+        }
+    }
+
     void SetLayerRecursively(GameObject gameObject, int newLayer)
     {
         gameObject.layer = newLayer;

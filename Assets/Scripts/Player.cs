@@ -14,6 +14,15 @@ public class Player : NetworkBehaviour
     [SyncVar]
     private int currentHealt;
 
+    [SyncVar]
+    public string username = "Loading...";
+
+    [SyncVar]
+    public int kills;
+    public int killsThisLife;
+    [SyncVar]
+    public int deaths;
+
 
     [SerializeField]
     private int maxHealth = 100;
@@ -35,7 +44,7 @@ public class Player : NetworkBehaviour
     #region rpc methods
 
     [ClientRpc]
-    public void RpcTakeDamage(int _amount)
+    public void RpcTakeDamage(int _amount,string _sourceID)
     {
         if (isDead)
             return;
@@ -44,7 +53,7 @@ public class Player : NetworkBehaviour
 
         if (currentHealt <= 0)
         {
-            Die();
+            Die(_sourceID);
         }
     }
     #endregion rpc methods
@@ -135,10 +144,19 @@ public class Player : NetworkBehaviour
         Debug.Log(transform.name + " respawned.");
     }
 
-    private void Die()
+    private void Die(string _sourceID)
     {
         isDead = true;
 
+        Player sourcePlayer = GameManager.GetPlayer(_sourceID);
+        if (sourcePlayer != null)
+        {
+            sourcePlayer.kills++;
+            sourcePlayer.killsThisLife++;
+        }
+
+        deaths++;
+        killsThisLife = 0;
 
         //disable components
         for (int i = 0; i < disableOnDeath.Length; i++)

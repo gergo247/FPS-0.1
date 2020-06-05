@@ -44,6 +44,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+        if (Cursor.lockState != CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
         //setting target position for spring, this makes the physics act right when it comes to
         //applying gravity when flying over objects
         RaycastHit _hit;
