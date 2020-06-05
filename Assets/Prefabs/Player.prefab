@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 1766299972474109142}
   - component: {fileID: 1177185867882215441}
   - component: {fileID: 6355262935315378636}
-  - component: {fileID: 4182722481660603084}
+  - component: {fileID: 5976411363143995411}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -575,6 +575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  username: Loading...
   kills: 0
   killsThisLife: 0
   deaths: 0
@@ -589,6 +590,20 @@ MonoBehaviour:
     type: 3}
   spawnEffect: {fileID: 5361101528164247849, guid: dba32b3c7d7f19644bcb02a72e04ea2c,
     type: 3}
+  FirstBlood: {fileID: 8300000, guid: f9345a58d6834b748ae8f62b42f9ab8a, type: 3}
+  DoubleKill: {fileID: 8300000, guid: 5a234dc1273570b41b31d44f996cced3, type: 3}
+  MultiKill: {fileID: 8300000, guid: b26f906b7fc312745988df17669e2261, type: 3}
+  MegaKill: {fileID: 8300000, guid: a1c6e02ca58789d44b55439fd4ab57be, type: 3}
+  UltraKill: {fileID: 8300000, guid: 58440fb3d7768194ca39f06bfa3a51af, type: 3}
+  MonsterKill: {fileID: 8300000, guid: d9e60cea59e0ecd4b98776a2096d65b0, type: 3}
+  LudicrousKill: {fileID: 8300000, guid: 1d6ca04b0440acf4f8944547156c8a1a, type: 3}
+  HolyShit: {fileID: 8300000, guid: 7eaa450bdccbcfc4aabfea56c123178c, type: 3}
+  KillingSpree: {fileID: 8300000, guid: 0da7f4b75a9033f40921119b5a010447, type: 3}
+  Rampage: {fileID: 8300000, guid: 7c7ce8c8022a94f44b4a878ab0e4d199, type: 3}
+  Dominating: {fileID: 8300000, guid: 7c6254bcf8b9fec448be874f63eaa6c9, type: 3}
+  Unstoppable: {fileID: 8300000, guid: 12d4d0b4ad012f1419bc594399866feb, type: 3}
+  GODLIKE: {fileID: 8300000, guid: 689728b4d2d1b2b4d826dfbf314962e6, type: 3}
+  WICKEDSICK: {fileID: 8300000, guid: d407734eb54996c45832c50cc73f717d, type: 3}
 --- !u!114 &6355262935315378636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,18 +627,102 @@ MonoBehaviour:
     fireRate: 10
     graphics: {fileID: 4355647378189887255, guid: d29f11d3a71c0a845a36c62eab564ff8,
       type: 3}
---- !u!114 &4182722481660603084
-MonoBehaviour:
+--- !u!82 &5976411363143995411
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347020314257041843}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07becd4885fd5474f973cb02f1074199, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1347020314536032733
 GameObject:
   m_ObjectHideFlags: 0

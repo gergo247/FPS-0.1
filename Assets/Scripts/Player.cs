@@ -39,7 +39,24 @@ public class Player : NetworkBehaviour
     private GameObject spawnEffect;
 
     private bool firstSetup = true;
-
+    //audio
+    AudioSource audio;
+    //mutliple kill
+    public AudioClip FirstBlood;
+    public AudioClip DoubleKill;
+    public AudioClip MultiKill;
+    public AudioClip MegaKill;
+    public AudioClip UltraKill;
+    public AudioClip MonsterKill;
+    public AudioClip LudicrousKill;
+    public AudioClip HolyShit;
+    // no die
+    public AudioClip KillingSpree;
+    public AudioClip Rampage;
+    public AudioClip Dominating;
+    public AudioClip Unstoppable;
+    public AudioClip GODLIKE;
+    public AudioClip WICKEDSICK;       
 
     #region rpc methods
 
@@ -117,18 +134,12 @@ public class Player : NetworkBehaviour
         GameObject _gfxIns = (GameObject)Instantiate(spawnEffect, transform.position, Quaternion.identity);
         Destroy(_gfxIns, 3f);
 
+        audio = GetComponent<AudioSource>();
+        audio.volume = 0.2f;
+
     }
     #endregion public methods
-    //void Update()
-    //{
-    //    if (!isLocalPlayer)
-    //        return;
 
-    //    if (Input.GetKeyDown(KeyCode.K))
-    //    {
-    //        RpcTakeDamage(9999);
-    //    }
-    //}
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime);
@@ -153,6 +164,7 @@ public class Player : NetworkBehaviour
         {
             sourcePlayer.kills++;
             sourcePlayer.killsThisLife++;
+            sourcePlayer.PlayKillSound();
         }
 
         deaths++;
@@ -188,5 +200,78 @@ public class Player : NetworkBehaviour
         Debug.Log(transform.name + "is Dead");
         //call respawn
         StartCoroutine(Respawn());
+    }
+
+    void Update()
+    {
+        if (!isLocalPlayer)
+            return;
+
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    RpcTakeDamage(9999);
+        //}
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            killsThisLife++;
+            PlayKillSound();
+        }
+    }
+
+
+
+    public void PlayKillSound()
+    {
+
+        switch (killsThisLife)
+        {
+            case 1:
+                audio.clip = FirstBlood;
+                break;
+            case 2:
+                audio.clip = DoubleKill;
+                break;
+            case 3:
+                audio.clip = MultiKill;
+                break;
+            case 4:
+                audio.clip = MegaKill;
+                break;
+            case 5:
+                audio.clip = UltraKill;
+                break;
+            case 6:
+                audio.clip = MonsterKill;
+                break;
+            case 7:
+                audio.clip = LudicrousKill;
+                break;
+            case 8:
+                audio.clip = HolyShit;
+                break;
+          //  case 5:
+          //      audio.clip = KillingSpree;
+          //      break;
+            case 10:
+                audio.clip = Rampage;
+                break;
+            case 15:
+                audio.clip = Dominating;
+                break;
+            case 20:
+                audio.clip = Unstoppable;
+                break;
+            case 25:
+                audio.clip = GODLIKE;
+                break;
+            case 30:
+                audio.clip = WICKEDSICK;
+                break;
+            default:
+                audio.clip = null;
+                break;
+        }
+
+        audio.Play();
     }
 }

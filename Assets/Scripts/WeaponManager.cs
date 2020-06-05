@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Mirror;
+using System.Collections;
 
 public class WeaponManager : NetworkBehaviour
 {
@@ -13,6 +14,8 @@ public class WeaponManager : NetworkBehaviour
 
     private PlayerWeapon currentWeapon;
     private WeaponGraphics currentGraphics;
+
+    private bool isReloading = false;
     void Start()
     {
         EquipWeapon(primaryWeapon);
@@ -29,14 +32,14 @@ public class WeaponManager : NetworkBehaviour
     void EquipWeapon(PlayerWeapon _weapon)
     {
         currentWeapon = _weapon;
-        GameObject _weaponIns =  (GameObject)Instantiate(_weapon.graphics, weaponHolder.position, weaponHolder.rotation);
+        GameObject _weaponIns = (GameObject)Instantiate(_weapon.graphics, weaponHolder.position, weaponHolder.rotation);
 
 
         currentGraphics = _weaponIns.GetComponent<WeaponGraphics>();
         Debug.Log("currentGraphics:" + currentGraphics.name);
         if (currentGraphics == null)
         {
-            Debug.LogError("No WeaponGraphics component on the weapon object: "+ _weaponIns.name);
+            Debug.LogError("No WeaponGraphics component on the weapon object: " + _weaponIns.name);
         }
 
         //set parent so it follows movement
@@ -44,5 +47,24 @@ public class WeaponManager : NetworkBehaviour
         if (isLocalPlayer)
             Util.SetLayerRecursively(_weaponIns, LayerMask.NameToLayer(weaponLayerName));
 
-    } 
+    }
+
+    public void Reload()
+    {
+        if (isReloading)
+            return;
+
+        StartCoroutine(Reload_Coroutine());
+    }
+
+    private IEnumerator Reload_Coroutine()
+    {
+        isReloading = true;
+
+        yield return new WaitForSeconds(currentWeapon.reloadTime);
+
+        currentWeapon.bullets = currentWeapon.maxBullets;
+
+        isReloading = false;
+    }
 }
