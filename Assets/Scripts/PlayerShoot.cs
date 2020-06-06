@@ -96,11 +96,15 @@ public class PlayerShoot : NetworkBehaviour
     void RpcDoShootEffect()
     {
         weaponManager.GetCurrentGraphics().muzzleFlash.Play();
+        //player shoot
+        Animator anim = weaponManager.GetCurrentGraphics().GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetTrigger("Shoot");
+        }
+
         if (gunAudio == null)
             return;
-
-    //    int randomIndex = Random.Range(0, shootSounds.Count);
-       // gunAudio.clip = shootSounds[randomIndex];
         if (gunAudio != null)
         gunAudio.PlayOneShot(shootSounds[0]);
     }
@@ -110,6 +114,7 @@ public class PlayerShoot : NetworkBehaviour
     {
         if (!isLocalPlayer || weaponManager.isReloading)
         {
+           // weaponManager.Shoot();
             return;
         }
 
@@ -119,6 +124,9 @@ public class PlayerShoot : NetworkBehaviour
             weaponManager.Reload();
             return;
         }
+
+        
+
 
         currentWeapon.bullets--;
         Debug.Log("Remaining bullets :" + currentWeapon.bullets);

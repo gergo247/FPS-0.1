@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Mirror;
 using System.Collections;
+using System;
 
 public class WeaponManager : NetworkBehaviour
 {
@@ -88,8 +89,10 @@ public class WeaponManager : NetworkBehaviour
         {
             anim.SetTrigger("Reload");
         }
+
         if (reloadAudio != null)
             reloadAudio.PlayOneShot(reloadSound);
 
     }
+    
 }

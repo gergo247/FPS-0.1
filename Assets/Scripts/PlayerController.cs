@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMotor motor;
     private ConfigurableJoint joint;
 
+  //  private bool cursorLocked = true;
     void Start()
     {
         motor = GetComponent<PlayerMotor>();
@@ -45,10 +46,22 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if (Cursor.lockState != CursorLockMode.Locked)
+        //if (Input.GetKeyUp(KeyCode.Escape))
+        //{
+        //    cursorLocked = !cursorLocked;
+        //}
+
+        if (/*cursorLocked &&*/ Cursor.lockState != CursorLockMode.Locked)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+        //else
+        //{
+        //    if (Cursor.lockState != CursorLockMode.None)
+        //        Cursor.lockState = CursorLockMode.None; ;
+        //}
+
+
 
         //setting target position for spring, this makes the physics act right when it comes to
         //applying gravity when flying over objects

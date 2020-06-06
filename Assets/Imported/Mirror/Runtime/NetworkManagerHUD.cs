@@ -156,5 +156,11 @@ namespace Mirror
                 }
             }
         }
+
+        //custom code
+       public void SetPlayerName(string playerName)
+        { 
+        PlayerPrefs.SetString("playerName", playerName);
+        }
     }
 }

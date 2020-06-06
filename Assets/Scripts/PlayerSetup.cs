@@ -43,13 +43,17 @@ public class PlayerSetup : NetworkBehaviour
 
             //player required component
             GetComponent<Player>().SetupPlayer();
-            string _username = "Test";
-            _username = transform.name;
+            string _username = PlayerPrefs.GetString("playerName");
+            if (string.IsNullOrEmpty(_username))
+            {
+                 _username = transform.name;
+            }
 
             CmdSetUsername(transform.name, _username);
         }
-        
+
     }
+
     [Command]
     void CmdSetUsername(string playerID, string username)
     {
