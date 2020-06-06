@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMotor motor;
     private ConfigurableJoint joint;
 
-  //  private bool cursorLocked = true;
+    private bool cursorLocked = true;
     void Start()
     {
         motor = GetComponent<PlayerMotor>();
@@ -46,19 +46,26 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        //if (Input.GetKeyUp(KeyCode.Escape))
-        //{
-        //    cursorLocked = !cursorLocked;
-        //}
 
-        if (/*cursorLocked &&*/ Cursor.lockState != CursorLockMode.Locked)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            cursorLocked = !cursorLocked;
+        }
+        if (cursorLocked)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
         }
-        //else
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        //if (Cursor.lockState != CursorLockMode.Locked)
         //{
-        //    if (Cursor.lockState != CursorLockMode.None)
-        //        Cursor.lockState = CursorLockMode.None; ;
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    Cursor.visible = false;
         //}
 
 
@@ -121,6 +128,8 @@ public class PlayerController : MonoBehaviour
         motor.ApplyThruster(_thrusterForce);
 
     }
+
+
     private void SetJointSettings( float _jointSpring)
     {
         joint.yDrive = new JointDrive

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -7,6 +9,9 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField]
     GameObject scoreBoard;
+
+    [SerializeField]
+    Text ammoText;
 
     private PlayerController controller;
     public void SetController(PlayerController _controller)
